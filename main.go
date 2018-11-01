@@ -14,6 +14,7 @@ func main() {
 	var (
 		attendeesFile = flag.String("attendees", "attendees.csv", "Input file containing lunch attendees")
 		groupFile     = flag.String("groups", "groups.csv", "Output file containing recommended lunch groups")
+		groupSize     = flag.Int("groupSize", 5, "Desired size of lunch group")
 		iterations    = flag.Int("iterations", 10000, "Number of iterations to simulate")
 		historyFile   = flag.String("history", "history.db", "Sqlite Database containing group history")
 	)
@@ -26,7 +27,8 @@ func main() {
 	logger.Info("Reading input from file", zap.String("input", *attendeesFile))
 	logger.Info("Will output groups to file", zap.String("output", *groupFile))
 	logger.Info("Reading history from file", zap.String("history", *historyFile))
-	logger.Info(fmt.Sprintf("Will run %v iterations", iterations))
+	logger.Info(fmt.Sprintf("Will run %d iterations", *iterations))
+	logger.Info(fmt.Sprintf("Will try to create groups with %d people", *groupSize))
 
 	f, err := os.Open(*attendeesFile)
 	if err != nil {
